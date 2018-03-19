@@ -1,76 +1,98 @@
 package com.app;
+
 import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
+
+import com.app.page.HomePage;
+import com.app.page.LoginPage;
+import com.app.page.MyAddressPage;
+import org.testng.Assert;
 import org.testng.annotations.*;
+
 import static org.testng.Assert.*;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class ShopTest extends BaseTest {
 
-   @Test (groups = "login")
-    public void loginTest() throws Exception {
-        driver.get(baseUrl);
-        driver.findElement(By.linkText("Sign in")).click();
-        driver.findElement(By.id("email")).click();
-        driver.findElement(By.id("email")).clear();
-        driver.findElement(By.id("email")).sendKeys("testt@gmail.com");
-        driver.findElement(By.id("passwd")).clear();
-        driver.findElement(By.id("passwd")).sendKeys("12369874");
-        driver.findElement(By.id("SubmitLogin")).click();
-        driver.findElement(By.xpath("//div[@id='columns']/div[3]")).click();
-        try {
-            assertEquals(driver.findElement(By.linkText("Sign out")).getText(), "Sign out");
-        } catch (Error e) {
-            System.err.println(e.getMessage());
-        }
-        driver.findElement(By.linkText("Sign out")).click();
-        try {
-            assertEquals(driver.findElement(By.linkText("Sign in")).getText(), "Sign in");
-        } catch (Error e) {
-            System.err.println(e.getMessage());
-        }
+    @Test(groups = "login")
+    public void loginTest() {
+        driver.get(baseUrl + "/index.php");
+        String signOutText =
+                new HomePage(driver)
+                        .goToLoginPage()
+                        .inputLogin("testT@gmail.com")
+                        .inputPassword("12369874")
+                        .submitLogin()
+                        .getSignOutText();
+        Assert.assertEquals(signOutText, "Sign out");
+        HomePage exit = new HomePage(driver).doLogOut();
     }
 
-   @Test (groups = "address")
+    @Test(groups = "address", priority = 0)
     public void addNewAddressTest() {
-        driver.get(baseUrl);
-        driver.findElement(By.linkText("Sign in")).click();
-        driver.findElement(By.id("email")).click();
-        driver.findElement(By.id("email")).clear();
-        driver.findElement(By.id("email")).sendKeys("testt@gmail.com");
-        driver.findElement(By.id("passwd")).clear();
-        driver.findElement(By.id("passwd")).sendKeys("12369874");
-        driver.findElement(By.id("SubmitLogin")).click();
-        driver.findElement(By.xpath("//div[@id='columns']/div[3]")).click();
-        driver.findElement(By.cssSelector("#center_column > div > div:nth-child(1) > ul > li:nth-child(3) > a")).click();
-        driver.findElement(By.cssSelector("#center_column > div.clearfix.main-page-indent > a")).click();
-        driver.findElement(By.id("firstname")).clear();
-        driver.findElement(By.id("firstname")).sendKeys("testName");
-        driver.findElement(By.name("address1")).sendKeys("testAdress");
-        driver.findElement(By.name("address2")).sendKeys("testAdress2");
-        driver.findElement(By.id("city")).sendKeys("testCity");
-        Select selectStateEl = new Select(driver.findElement(By.id("id_state")));
-        selectStateEl.selectByValue("4");
-        driver.findElement(By.id("postcode")).sendKeys("62418");
-        driver.findElement(By.id("phone")).sendKeys("6241803");
-        driver.findElement(By.id("phone_mobile")).sendKeys("6241805");
-        driver.findElement(By.id("alias")).clear();
-        driver.findElement(By.id("alias")).sendKeys("TEST");
-        driver.findElement(By.id("submitAddress")).click();
-        driver.get("http://automationpractice.com/index.php?controller=addresses");
-        assertEquals(driver.findElement(By.cssSelector("#center_column > div.addresses > div > div:nth-child(2) > ul > li:nth-child(1) > h3")).getText(),"TEST");
-        driver.findElement(By.linkText("Sign out")).click();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        driver.get(baseUrl + "/index.php");
+        String newAddressName =
+                new HomePage(driver)
+                        .goToLoginPage()
+                        .inputLogin("testT@gmail.com")
+                        .inputPassword("12369874")
+                        .submitLogin()
+                        .goToAddressPage()
+                        .addNewAddress()
+                        .inputFirstName("testFirstName")
+                        .inputLastName("testLastName")
+                        .inputAddress("testAddress")
+                        .inputCity("testCity")
+                        .inputPostcode("01011")
+                        .inputPhoneNumber("6241805")
+                        .selectState("4")
+                        .inputAddress2("testAddress2")
+                        .inputMobilePhoneNumber("5081426")
+                        .inputAddressTitle("TEST ADDRESS")
+                        .submitAddingAddress()
+                        .getSecondAddressName();
+        Assert.assertEquals(newAddressName, "TEST ADDRESS");
+        HomePage exit = new HomePage(driver).doLogOut();
+
+//        driver.get(baseUrl);
+//        driver.findElement(By.linkText("Sign in")).click();
+//        driver.findElement(By.id("email")).click();
+//        driver.findElement(By.id("email")).clear();
+//        driver.findElement(By.id("email")).sendKeys("testt@gmail.com");
+//        driver.findElement(By.id("passwd")).clear();
+//        driver.findElement(By.id("passwd")).sendKeys("12369874");
+//        driver.findElement(By.id("SubmitLogin")).click();
+//        driver.findElement(By.xpath("//div[@id='columns']/div[3]")).click();
+//        driver.findElement(By.cssSelector("#center_column > div > div:nth-child(1) > ul > li:nth-child(3) > a")).click();
+//        driver.findElement(By.cssSelector("#center_column > div.clearfix.main-page-indent > a")).click();
+//        driver.findElement(By.id("firstname")).clear();
+//        driver.findElement(By.id("firstname")).sendKeys("testName");
+//        driver.findElement(By.name("address1")).sendKeys("testAdress");
+//        driver.findElement(By.name("address2")).sendKeys("testAdress2");
+//        driver.findElement(By.id("city")).sendKeys("testCity");
+//        Select selectStateEl = new Select(driver.findElement(By.id("id_state")));
+//        selectStateEl.selectByValue("4");
+//        driver.findElement(By.id("postcode")).sendKeys("62418");
+//        driver.findElement(By.id("phone")).sendKeys("6241803");
+//        driver.findElement(By.id("phone_mobile")).sendKeys("6241805");
+//        driver.findElement(By.id("alias")).clear();
+//        driver.findElement(By.id("alias")).sendKeys("TEST");
+//        driver.findElement(By.id("submitAddress")).click();
+//        driver.get("http://automationpractice.com/index.php?controller=addresses");
+//        assertEquals(driver.findElement(By.cssSelector("#center_column > div.addresses > div > div:nth-child(2) > ul > li:nth-child(1) > h3")).getText(),"TEST");
+//        driver.findElement(By.linkText("Sign out")).click();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
-    @Test (groups = "address")
-    public void atestEditAddress() throws Exception {
+    @Test(groups = "address", priority = 1)
+    public void testEditAddress() throws Exception {
         driver.get(baseUrl + "/index.php?controller=authentication&back=my-account");
         driver.findElement(By.linkText("Sign in")).click();
         driver.findElement(By.id("email")).clear();
@@ -86,7 +108,8 @@ public class ShopTest extends BaseTest {
         assertEquals(driver.findElement(By.xpath("//div[@id='center_column']/div/div/div[2]/ul/li[5]/span[3]")).getText(), "62417");
         driver.findElement(By.linkText("Sign out")).click();
     }
-    @Test (groups = "address")
+
+    @Test(groups = "address", priority = 2)
     public void testDeleteAddress() throws Exception {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Sign in")).click();
@@ -99,12 +122,12 @@ public class ShopTest extends BaseTest {
         driver.findElement(By.xpath("//div[@id='center_column']/div/div/div[2]/ul/li[9]/a[2]/span")).click();
         assertTrue(closeAlertAndGetItsText().matches("^Are you sure[\\s\\S]$"));
         //TODO
-        assertTrue(!driver.findElement(By.cssSelector("h3.page-subheading")).getText().contains("TEST") );
+        assertTrue(!driver.findElement(By.cssSelector("h3.page-subheading")).getText().contains("TEST"));
         driver.findElement(By.linkText("Sign out")).click();
     }
 
 
-    @Test (groups = "sort")
+    @Test(groups = "sort")
     public void testSortByPrice() throws Exception {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Women")).click();
@@ -117,7 +140,7 @@ public class ShopTest extends BaseTest {
         }
     }
 
-    @Test (groups = "sort")
+    @Test(groups = "sort")
     public void testSortByName() throws Exception {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Women")).click();
@@ -130,7 +153,7 @@ public class ShopTest extends BaseTest {
         }
     }
 
-    @Test (groups = "filter")
+    @Test(groups = "filter")
     public void testFilterByColour() throws Exception {
         driver.get(baseUrl);
         driver.findElement(By.linkText("Women")).click();
