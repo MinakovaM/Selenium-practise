@@ -58,3 +58,5 @@ hs_err_pid*
 
 # JIRA plugin
 atlassian-ide-plugin.xml
+*.iml
+.idea
