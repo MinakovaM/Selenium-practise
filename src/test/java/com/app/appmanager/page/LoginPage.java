@@ -1,4 +1,4 @@
-package com.app.page;
+package com.app.appmanager.page;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,15 +18,14 @@ public class LoginPage extends BasePage {
     }
 
     public LoginPage inputLogin(String login) {
-        loginField.clear();
-        loginField.sendKeys(login);
-        return this;
+        type(loginField, login);
+        return new LoginPage(driver);
     }
 
+
     public LoginPage inputPassword(String passw) {
-        passwField.clear();
-        passwField.sendKeys(passw);
-        return this;
+        type(passwField, passw);
+        return new LoginPage(driver);
     }
 
     public AccountPage submitLogin() {

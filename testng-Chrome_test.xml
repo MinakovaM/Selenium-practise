@@ -5,7 +5,7 @@
     <test name="ChromeTest">
         <parameter name="browser" value="chrome"/>
         <packages>
-            <package name="com.app.*"/>
+            <package name="com.app.tests.*"/>
         </packages>
     </test>
 
