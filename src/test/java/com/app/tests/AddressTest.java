@@ -19,7 +19,7 @@ public class AddressTest extends BaseTest {
         app.address().goToMyAddressesPage();
     }
 
-    @Test(dataProvider = "creationAddress", priority = 1)
+    @Test(dataProvider = "creationAddress", priority = 2)
     public void testAddressAdd(AddressData address) {
         if (app.address().isPresentAlias(address.getAlias())) {
             app.address().remove(address.getAlias());

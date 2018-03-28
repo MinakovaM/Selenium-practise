@@ -19,7 +19,7 @@ public class LoginTest extends BaseTest {
 
     }
 
-    @Test
+    @Test (priority = 1)
     public void testCorrectLogin() {
         app.session().login(app.properties.getProperty("login"), "12369874");
         Assert.assertEquals(app.login().signOutText(), "Sign out");
