@@ -1,52 +1,20 @@
 package com.app.appmanager.model;
 
+import java.util.Objects;
+
 public class AddressData {
-    private final String firstName;
-    private final String lastName;
-    private final String company;
-    private final String address1;
-    private final String address2;
-    private final String city;
-    private final int state;
-    private final String zipCode;
-    private final int country;
-    private final String homePhone;
-    private final String mobilePhone;
-    private final String title;
-
-
-//    public AddressData(String firstName, String lastName, String company, String address1,
-//                       String address2, String city, String state, String zipCode, String country, String homePhone,
-//                       String mobilePhone, String title) {
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.company = company;
-//        this.address1 = address1;
-//        this.address2 = address2;
-//        this.city = city;
-//        this.state = state;
-//        this.zipCode = zipCode;
-//        this.country = country;
-//        this.homePhone = homePhone;
-//        this.mobilePhone = mobilePhone;
-//        this.title = title;
-//    }
-    public AddressData(String firstName, String lastName, String company, String address1,
-                       String address2, String city, int state, String zipCode, int country, String homePhone,
-                       String mobilePhone, String title) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.company = company;
-        this.address1 = address1;
-        this.address2 = address2;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.country = country;
-        this.homePhone = homePhone;
-        this.mobilePhone = mobilePhone;
-        this.title = title;
-    }
+    private String firstName;
+    private String lastName;
+    private String company;
+    private String address1;
+    private String address2;
+    private String city;
+    private String state;
+    private String zipCode;
+    private String country;
+    private String homePhone;
+    private String mobilePhone;
+    private String addressAlias;
 
     public String getFirstName() {
         return firstName;
@@ -55,6 +23,7 @@ public class AddressData {
     public String getLastName() {
         return lastName;
     }
+
     public String getCompany() {
         return company;
     }
@@ -71,7 +40,7 @@ public class AddressData {
         return city;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
@@ -79,7 +48,7 @@ public class AddressData {
         return zipCode;
     }
 
-    public int getCountry() {
+    public String getCountry() {
         return country;
     }
 
@@ -91,7 +60,100 @@ public class AddressData {
         return mobilePhone;
     }
 
-    public String getTitle() {
-        return title;
+    public String getAlias() {
+        return addressAlias;
+    }
+
+    public AddressData withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public AddressData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public AddressData withAddress1(String address1) {
+        this.address1 = address1;
+        return this;
+    }
+    public AddressData withAddress2(String address2) {
+        this.address2 = address2;
+        return this;
+    }
+
+    public AddressData withCity(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public AddressData withState(String state) {
+        this.state = state;
+        return this;
+    }
+
+    public AddressData withZipCode(String zipCode) {
+        this.zipCode = zipCode;
+        return this;
+    }
+
+    public AddressData withCountry(String country) {
+        this.country = country;
+        return this;
+    }
+
+    public AddressData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
+    public AddressData withMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+        return this;
+    }
+
+    public AddressData withAddressAlias(String addressAlias) {
+        this.addressAlias = addressAlias;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AddressData that = (AddressData) o;
+        return Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName) &&
+                Objects.equals(address1, that.address1) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(state, that.state) &&
+                Objects.equals(zipCode, that.zipCode) &&
+                Objects.equals(country, that.country) &&
+                Objects.equals(homePhone, that.homePhone) &&
+                Objects.equals(mobilePhone, that.mobilePhone) &&
+                Objects.equals(addressAlias, that.addressAlias);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, address1, city, state, zipCode, country, homePhone, mobilePhone, addressAlias);
+    }
+
+    @Override
+    public String toString() {
+        return "AddressData{" +
+                ", addressAlias='" + addressAlias + '\'' +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address1 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                '}';
     }
 }
+

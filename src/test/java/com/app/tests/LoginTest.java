@@ -1,26 +1,28 @@
 package com.app.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.annotations.DataProvider;
 
 public class LoginTest extends BaseTest {
 
+
+    @Test(dataProvider = "invalidData", priority = 0)
+    public void testInvalidLogin(String login, String passwd, String errorMessage) {
+        Assert.assertEquals(app.login().invalidLoginError(login,passwd), errorMessage);
+    }
+
+    @DataProvider(name = "invalidData")
+    private Object[] getLoginData() {
+
+        return app.loginsForTest();
+
+    }
+
     @Test
-    public void testLogin() {
-//        app.driver.get(app.baseUrl + "/index.php");
-//        String signOutText =
-//                new HomePage(app.driver)
-//                .goToLoginPage()
-//                .inputLogin("oleg.kh81@gmail.com")
-//                .inputPassword("vlrevlor")
-//                .submitLogin()
-//                .getSignOutText();
-
-//        LoginPage loginPage = homePage.goToLoginPage();
-//        loginPage.inputLogin("oleg.kh81@gmail.com");
-//        loginPage.inputPassword("vlrevlor");
-//        AccountPage accountPage = loginPage.submitLogin();
-//        String signOutText = accountPage.getSignOutText();
-
-//        Assert.assertEquals(signOutText, "Sign out");
+    public void testCorrectLogin() {
+        app.session().login(app.properties.getProperty("login"), "12369874");
+        Assert.assertEquals(app.login().signOutText(), "Sign out");
     }
 }
+

@@ -13,17 +13,10 @@ public class SessionHelper {
     }
 
 
-    public void login() {
+    public void login(String login, String password) {
         new HomePage(driver).goToLoginPage()
-                .inputLogin("testt@gmail.com")
-                .inputPassword("12369874")
+                .inputLogin(login)
+                .inputPassword(password)
                 .submitLogin();
-//        driver.findElement(By.linkText("Sign in")).click();
-//        driver.findElement(By.id("email")).click();
-//        driver.findElement(By.id("email")).clear();
-//        driver.findElement(By.id("email")).sendKeys("testT@gmail.com");
-//        driver.findElement(By.id("passwd")).clear();
-//        driver.findElement(By.id("passwd")).sendKeys("12369874");
-//        driver.findElement(By.id("SubmitLogin")).click();
     }
 }

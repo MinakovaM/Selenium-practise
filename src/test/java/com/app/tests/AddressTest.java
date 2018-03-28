@@ -1,59 +1,54 @@
 package com.app.tests;
 
 import com.app.appmanager.model.AddressData;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.app.appmanager.model.Addresses;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AddressTest extends BaseTest {
-    private static Logger LOG = LogManager.getLogger(AddressTest.class.getName());
 
-//    @Test(enabled=false)
-//    public void testDemo() throws Exception {
-//        app.driver.get(app.baseUrl + "/index.php");
-//        app.driver.findElement(By.linkText("Sign in")).click();
-//        LOG.debug("sign in click");
-//        app.driver.findElement(By.id("email")).click();
-//        app.driver.findElement(By.id("email")).clear();
-//        app.driver.findElement(By.id("email")).sendKeys("oleg.kh81@gmail.com");
-//        LOG.debug("main input");
-//        app.driver.findElement(By.id("passwd")).clear();
-//        app.driver.findElement(By.id("passwd")).sendKeys("vlrevlor");
-//        LOG.debug("password input");
-//        app.driver.findElement(By.id("SubmitLogin")).click();
-//        app.driver.findElement(By.xpath("//div[@id='columns']/div[3]")).click();
-//        LOG.debug("log in click");
-//        try {
-//            assertEquals(app.driver.findElement(By.linkText("Sign out")).getText(), "Sign out");
-//            LOG.info("Log in  successful");
-//        } catch (Error e) {
-//            LOG.error(e.getMessage());
-//        }
-//        app.driver.findElement(By.linkText("Sign out")).click();
-//        try {
-//            assertEquals(app.driver.findElement(By.linkText("Sign in")).getText(), "Sign in");
-//        } catch (Error e) {
-//            System.err.println(e.getMessage());
-//        }
-//    }
+    @BeforeMethod
+    public void preparePreconditions() {
+        app.session().login(app.getProperties().getProperty("login"), app.getProperties().getProperty("password"));
+        app.address().goToMyAddressesPage();
+    }
 
-    @Test
-    public void addNewAddressTest() {
-        app.getSessionHelper().login();
-        app.getAddressHelper().goToMyAccountPage();
-        app.getAddressHelper().goToMyAddressesPage();
-        app.getAddressHelper().initCreationAddress();
-        app.getAddressHelper().fillAddressForm(new AddressData("testName", "TestLastName", "testCompany", "testAddress",
-                "testAddress2", "testCity", 1, "77777", 21,
-                "123456789", "987654321", "TEST ADDRESS"));
-        app.getAddressHelper().confirmAddress();
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    @Test(dataProvider = "creationAddress", priority = 1)
+    public void testAddressAdd(AddressData address) {
+        if (app.address().isPresentAlias(address.getAlias())) {
+            app.address().remove(address.getAlias());
         }
+
+        Addresses before = app.address().all();
+        app.address().create(address);
+        Set<AddressData> after = app.address().all();
+
+        assertThat(after.size(), equalTo(before.size()+1));
+        assertThat(after, equalTo(before.withAdded(address.withAddressAlias(address.getAlias().toUpperCase()))));
+    }
+
+    @DataProvider(name="creationAddress")
+    private Object[] getCreationAddressData() {
+        return new Object[]{
+                new AddressData()
+                        .withFirstName("TestName")
+                        .withLastName("TestSurname")
+                        .withAddress1("Kirova str.")
+                        .withAddress2("38")
+                        .withCity("Kharkov")
+                        .withState("Alaska")
+                        .withZipCode("77777")
+                        .withCountry("United States")
+                        .withHomePhone("12369874")
+                        .withMobilePhone("47896321")
+                        .withAddressAlias("TestAddress")
+        };
     }
 }
+

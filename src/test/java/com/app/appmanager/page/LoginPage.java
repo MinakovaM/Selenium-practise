@@ -12,6 +12,8 @@ public class LoginPage extends BasePage {
     private WebElement passwField;
     @FindBy(id="SubmitLogin")
     private WebElement signInButton;
+    @FindBy(css = "#center_column > div.alert.alert-danger > ol > li")
+    private WebElement errorMessage;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -31,5 +33,14 @@ public class LoginPage extends BasePage {
     public AccountPage submitLogin() {
         signInButton.click();
         return new AccountPage(driver);
+    }
+
+    public LoginPage checkInvalidLogin(){
+        signInButton.click();
+        return new LoginPage(driver);
+    }
+
+    public WebElement getErrorMessage() {
+        return errorMessage;
     }
 }

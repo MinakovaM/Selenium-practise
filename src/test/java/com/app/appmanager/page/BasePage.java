@@ -5,6 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BasePage {
     protected WebDriver driver;
 
@@ -18,18 +21,28 @@ public class BasePage {
         inputField.clear();
         inputField.sendKeys(value);
     }
-    protected void select (WebElement el, String value) {
+
+    protected void selectByValue(WebElement el, String value) {
         new Select(el).selectByValue(value);
-        }
-    protected void select (WebElement el, int index){
-        new Select(el).selectByIndex(index);
     }
 
-    protected  void click(WebElement button) {
+    protected void selectByText(WebElement select, String text) {
+        new Select(select).selectByVisibleText(text);
+    }
+
+    protected void click(WebElement button) {
         button.click();
     }
 
-    protected void selectByValue(WebElement select, String value) {
+    protected void allertAccept() {
+        driver.switchTo().alert().accept();
+    }
 
+    protected List<String> extractTextFromElements(List<WebElement> elements) {
+        List<String> textList = new ArrayList<>(elements.size());
+        for(WebElement el : elements)
+            textList.add(el.getText().trim());
+
+        return textList;
     }
 }

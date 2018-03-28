@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class FormAddressPage extends BasePage {
 
     @FindBy(id = "firstname")
@@ -30,6 +32,8 @@ public class FormAddressPage extends BasePage {
     private WebElement titleInput;
     @FindBy(id = "submitAddress")
     private WebElement saveButton;
+    @FindBy(css = "#center_column > div.addresses ul")
+    private List<WebElement> addresses;
 
     public FormAddressPage(WebDriver driver) {
         super(driver);
@@ -60,16 +64,16 @@ public class FormAddressPage extends BasePage {
         return new FormAddressPage(driver);
     }
 
-    public FormAddressPage inputState(int state) {
-        select(stateInput, state);
+    public FormAddressPage inputState(String state) {
+        selectByText(stateInput, state);
         return new FormAddressPage(driver);
     }
     public FormAddressPage inputZipCode(String zip){
         type(zipCodeInput, zip);
         return new FormAddressPage(driver);
     }
-    public FormAddressPage inputCountry (int country){
-        select(countryInput, country);
+    public FormAddressPage inputCountry (String country){
+        selectByText(countryInput, country);
         return new FormAddressPage(driver);
     }
     public FormAddressPage inputHomePhone (String phone){
@@ -88,4 +92,8 @@ public class FormAddressPage extends BasePage {
         click(saveButton);
         return new MyAddressPage(driver);
     }
+
+//    public int getCountAddressesElements() {
+//        return addresses.size();
+//    }
 }
