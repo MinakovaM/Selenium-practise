@@ -19,4 +19,8 @@ public class SessionHelper {
                 .inputPassword(password)
                 .submitLogin();
     }
+
+    public void logOut(){
+        driver.findElement(By.linkText("Sign out")).click();
+    }
 }

@@ -31,6 +31,7 @@ public class AddressTest extends BaseTest {
 
         assertThat(after.size(), equalTo(before.size()+1));
         assertThat(after, equalTo(before.withAdded(address.withAddressAlias(address.getAlias().toUpperCase()))));
+        app.session().logOut();
     }
 
     @DataProvider(name="creationAddress")

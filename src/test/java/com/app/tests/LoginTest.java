@@ -13,7 +13,7 @@ public class LoginTest extends BaseTest {
     }
 
     @DataProvider(name = "invalidData")
-    private Object[] getLoginData() {
+    private Object[][] getLoginData() {
 
         return app.loginsForTest();
 
@@ -23,6 +23,8 @@ public class LoginTest extends BaseTest {
     public void testCorrectLogin() {
         app.session().login(app.properties.getProperty("login"), "12369874");
         Assert.assertEquals(app.login().signOutText(), "Sign out");
+        app.session().logOut();
+
     }
 }
 
