@@ -15,7 +15,7 @@ public class AddressTest extends BaseTest {
 
     @BeforeMethod
     public void preparePreconditions() {
-        app.session().login(app.getProperties().getProperty("login"), app.getProperties().getProperty("password"));
+        app.session().login(app.getProperties().getProperty("login"), "12369874");
         app.address().goToMyAddressesPage();
     }
 
