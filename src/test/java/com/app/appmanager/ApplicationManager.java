@@ -79,7 +79,7 @@ public class ApplicationManager {
     }
 
     public Object[][] loginsForTest () {
-        return login().getLoginFromExcelFile("D:/Java/Tasks/SeleniumTest/src/main/resources/invalidLoginData.xlsx",
+        return login().getLoginFromExcelFile("./src/main/resources/invalidLoginData.xlsx",
                 "Лист1");
     }
 
