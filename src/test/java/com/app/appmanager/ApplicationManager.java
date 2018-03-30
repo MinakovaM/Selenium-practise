@@ -80,7 +80,7 @@ public class ApplicationManager {
 
     public Object[][] loginsForTest () {
         return login().getLoginFromExcelFile("./src/main/resources/invalidLoginData.xlsx",
-                "Лист1");
+                "LIST1");
     }
 
 
