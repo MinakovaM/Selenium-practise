@@ -8,10 +8,10 @@
     </formats>
     <fileSets>
         <fileSet>
-            <directory>suits</directory>
+            <directory>.</directory>
             <outputDirectory>suits</outputDirectory>
             <includes>
-                <include>**/*</include>
+                <include>*testng*.xml</include>
             </includes>
         </fileSet>
         <fileSet>
