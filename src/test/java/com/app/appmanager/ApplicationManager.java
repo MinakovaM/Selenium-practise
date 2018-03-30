@@ -35,7 +35,8 @@ public class ApplicationManager {
         this.browser = browser;
         this.properties = new Properties();
         try {
-            properties.load(new FileReader(new File("src/main/resources/test.properties")));
+            String propertyFile = System.getProperty("configFile", "src/main/resources/test.properties");
+            properties.load(new FileReader(new File(propertyFile)));
         } catch (IOException e) {
             e.printStackTrace();
         }
